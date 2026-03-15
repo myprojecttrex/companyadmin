@@ -1,245 +1,5 @@
-// import React, { useState } from "react";
-// import { motion } from "framer-motion";
-// import { Mail, Lock, Eye, EyeOff, Loader2, CheckCircle2 } from "lucide-react";
-// import "./App.css";
-
-// export default function Login({ onLogin }) {
-//   const [form, setForm] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [isLoading, setIsLoading] = useState(false);
-
-//   const handleChange = (e) => {
-//     setForm({ ...form, [e.target.name]: e.target.value });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (form.email && form.password) {
-//       setIsLoading(true);
-//       // Simulate API call
-//       setTimeout(() => {
-//         setIsLoading(false);
-//         onLogin?.();
-//       }, 1500);
-//     }
-//   };
-
-//   return (
-//     <div className="login-wrapper">
-//       <motion.div
-//         className="login-card"
-//         initial={{ opacity: 0, y: 20 }}
-//         animate={{ opacity: 1, y: 0 }}
-//         transition={{ duration: 0.5, ease: "easeOut" }}
-//       >
-//         <h1 className="login-title">Welcome Back</h1>
-//         <p className="login-subtitle">Please enter your details to sign in</p>
-
-//         <form onSubmit={handleSubmit} className="login-form">
-//           {/* Email */}
-//           <div className="input-group">
-//             <Mail className="input-icon" size={18} />
-//             <input
-//               type="text"
-//               name="email"
-//               placeholder="Username or Email"
-//               value={form.email}
-//               onChange={handleChange}
-//               required
-//             />
-//             {form.email && (
-//               <motion.div
-//                 className="input-feedback"
-//                 initial={{ scale: 0 }}
-//                 animate={{ scale: 1 }}
-//               >
-//                 <CheckCircle2 size={18} />
-//               </motion.div>
-//             )}
-//           </div>
-
-//           {/* Password */}
-//           <div className="input-group">
-//             <Lock className="input-icon" size={18} />
-//             <input
-//               type={showPassword ? "text" : "password"}
-//               name="password"
-//               placeholder="Password"
-//               value={form.password}
-//               onChange={handleChange}
-//               required
-//             />
-//             <button
-//               type="button"
-//               onClick={() => setShowPassword((p) => !p)}
-//               className="eye-btn"
-//               tabIndex="-1"
-//             >
-//               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-//             </button>
-//           </div>
-
-//           {/* Options */}
-//           <div className="login-options">
-//             <label className="remember-me">
-//               <input type="checkbox" />
-//               <span>Remember me</span>
-//             </label>
-//             <button type="button" className="forgot-btn">
-//               Forgot password?
-//             </button>
-//           </div>
-
-//           <motion.button
-//             type="submit"
-//             className="login-btn"
-//             disabled={isLoading}
-//             whileHover={{ scale: 1.02 }}
-//             whileTap={{ scale: 0.98 }}
-//           >
-//             {isLoading ? (
-//               <Loader2 className="spinner" size={20} />
-//             ) : (
-//               "Login"
-//             )}
-//           </motion.button>
-
-//           <p className="help-text">
-//             Need help? <span>Contact Support</span>
-//           </p>
-//         </form>
-//       </motion.div>
-//     </div>
-//   );
-// }
-
-// import React, { useState } from "react";
-// import "./App.css";
-
-// export default function Login({ onLogin }) {
-//   const [form, setForm] = useState({ email: "", password: "" });
-//   const [showPass, setShowPass] = useState(false);
-//   const [isLoading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
-
-//   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async e => {
-//     e.preventDefault();
-//     setError("");
-//     if (!form.email || !form.password) { setError("Please enter email and password."); return; }
-//     setLoading(true);
-//     setTimeout(() => {
-//       const success = onLogin(form.email, form.password);
-//       if (!success) setError("Invalid credentials. Check the hints below.");
-//       setLoading(false);
-//     }, 1000);
-//   };
-
-//   const quickFill = (email, pw) => setForm({ email, password: pw });
-
-//   const hints = [
-//     { role: "Main Admin", email: "admin@gobus.in", pw: "admin123", icon: "👑", color: "#4f46e5" },
-//     { role: "Company Admin", email: "company@smt.in", pw: "company123", icon: "🏢", color: "#10b981" },
-//     { role: "Driver", email: "driver@gobus.in", pw: "driver123", icon: "🚌", color: "#f59e0b" },
-//   ];
-
-//   return (
-//     <div style={{ minHeight: "100vh", display: "flex", background: "linear-gradient(135deg,#4f46e5 0%,#3b82f6 100%)" }}>
-//       {/* Left panel - branding */}
-//       <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 48, color: "white" }}>
-//         <div>
-//           <div style={{ fontSize: 56, marginBottom: 16 }}>🚌</div>
-//           <h1 style={{ fontSize: 40, fontWeight: 800, margin: "0 0 12px", letterSpacing: -1 }}>GoBus Admin</h1>
-//           <p style={{ fontSize: 16, opacity: .8, maxWidth: 320, lineHeight: 1.6 }}>
-//             Smart Real-Time Bus Tracking System — Monitor your fleet live, manage drivers, routes, and more.
-//           </p>
-//           <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 12 }}>
-//             {[["📡", "Live GPS tracking via driver mobile"], ["🗺", "Route & trip management"], ["📊", "Real-time analytics & reports"]].map(([icon, text]) => (
-//               <div key={text} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14, opacity: .85 }}>
-//                 <span style={{ fontSize: 20 }}>{icon}</span>{text}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Right panel - login */}
-//       <div style={{ width: 480, background: "white", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 48 }}>
-//         <div style={{ width: "100%", maxWidth: 380 }}>
-//           <h2 style={{ fontSize: 28, fontWeight: 800, color: "#0f172a", margin: "0 0 6px" }}>Welcome Back</h2>
-//           <p style={{ color: "#64748b", marginBottom: 32 }}>Sign in to your admin account</p>
-
-//           <form onSubmit={handleSubmit}>
-//             {/* Email */}
-//             <div style={{ marginBottom: 16 }}>
-//               <label style={{ fontSize: 13, fontWeight: 700, color: "#374151", display: "block", marginBottom: 6 }}>Email Address</label>
-//               <div style={{ position: "relative" }}>
-//                 <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 16 }}>✉</span>
-//                 <input name="email" type="text" value={form.email} onChange={handleChange} placeholder="your@email.com"
-//                   style={{ width: "100%", padding: "12px 14px 12px 40px", borderRadius: 12, border: "1.5px solid #e5e7eb", fontSize: 14, outline: "none", boxSizing: "border-box", transition: "border .2s" }}
-//                   onFocus={e => e.target.style.borderColor = "#4f46e5"} onBlur={e => e.target.style.borderColor = "#e5e7eb"} />
-//               </div>
-//             </div>
-
-//             {/* Password */}
-//             <div style={{ marginBottom: 20 }}>
-//               <label style={{ fontSize: 13, fontWeight: 700, color: "#374151", display: "block", marginBottom: 6 }}>Password</label>
-//               <div style={{ position: "relative" }}>
-//                 <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 16 }}>🔒</span>
-//                 <input name="password" type={showPass ? "text" : "password"} value={form.password} onChange={handleChange} placeholder="••••••••"
-//                   style={{ width: "100%", padding: "12px 44px 12px 40px", borderRadius: 12, border: "1.5px solid #e5e7eb", fontSize: 14, outline: "none", boxSizing: "border-box", transition: "border .2s" }}
-//                   onFocus={e => e.target.style.borderColor = "#4f46e5"} onBlur={e => e.target.style.borderColor = "#e5e7eb"} />
-//                 <button type="button" onClick={() => setShowPass(p => !p)} style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: 16, color: "#9ca3af" }}>
-//                   {showPass ? "🙈" : "👁"}
-//                 </button>
-//               </div>
-//             </div>
-
-//             {/* Error */}
-//             {error && (
-//               <div style={{ background: "#fee2e2", color: "#991b1b", padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
-//                 ✕ {error}
-//               </div>
-//             )}
-
-//             {/* Submit */}
-//             <button type="submit" disabled={isLoading} style={{ width: "100%", background: "#4f46e5", color: "white", border: "none", padding: "14px", borderRadius: 12, fontSize: 16, fontWeight: 700, cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? .7 : 1, transition: "background .2s" }}
-//               onMouseEnter={e => { if (!isLoading) e.target.style.background = "#4338ca"; }}
-//               onMouseLeave={e => e.target.style.background = "#4f46e5"}>
-//               {isLoading ? "Signing in..." : "Sign In →"}
-//             </button>
-//           </form>
-
-//           {/* Demo credential hints */}
-//           <div style={{ marginTop: 28 }}>
-//             <div style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", marginBottom: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: .5 }}>
-//               — Demo Credentials —
-//             </div>
-//             {hints.map(h => (
-//               <button key={h.role} onClick={() => quickFill(h.email, h.pw)}
-//                 style={{ width: "100%", background: "#f8fafc", border: `1.5px solid #e2e8f0`, borderRadius: 12, padding: "10px 14px", marginBottom: 8, cursor: "pointer", display: "flex", alignItems: "center", gap: 10, transition: "all .2s" }}
-//                 onMouseEnter={e => { e.currentTarget.style.borderColor = h.color; e.currentTarget.style.background = `${h.color}08`; }}
-//                 onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#f8fafc"; }}>
-//                 <span style={{ fontSize: 20 }}>{h.icon}</span>
-//                 <div style={{ textAlign: "left" }}>
-//                   <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{h.role}</div>
-//                   <div style={{ fontSize: 11, color: "#94a3b8" }}>{h.email} · {h.pw}</div>
-//                 </div>
-//                 <span style={{ marginLeft: "auto", fontSize: 11, color: h.color, fontWeight: 700 }}>Click to fill →</span>
-//               </button>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 import React, { useState } from "react";
+import { User, Lock, Eye, EyeOff, Navigation, Route, BarChart3, Loader2 } from "lucide-react";
 import "./App.css";
 
 export default function Login({ onLogin }) {
@@ -248,151 +8,298 @@ export default function Login({ onLogin }) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (!form.username || !form.password) { setError("Please enter username and password."); return; }
+    if (!form.username || !form.password) {
+      setError("Please enter username and password.");
+      return;
+    }
     setLoading(true);
-    setTimeout(() => {
-      const success = onLogin(form.username, form.password);
-      if (!success) setError("Invalid username or password. Try the hints below.");
+    // Mimic slight network delay for better UX
+    setTimeout(async () => {
+      const success = await onLogin(form.username, form.password);
+      if (!success) setError("Invalid username or password. Try the valid accounts.");
       setLoading(false);
-    }, 1000);
+    }, 800);
   };
 
   const quickFill = (username, pw) => setForm({ username, password: pw });
 
-  const hints = [
-    { role: "Main Admin", username: "mainadmin", pw: "admin123", icon: "👑", color: "#4f46e5" },
-    { role: "Company Admin", username: "companyadmin", pw: "company123", icon: "🏢", color: "#10b981" },
-    { role: "Driver", username: "driver1", pw: "driver123", icon: "🚌", color: "#f59e0b" },
+  const demoAccounts = [
+    {
+      role: "Main Admin",
+      username: "admin1",
+      pw: "pass123",
+      letter: "M",
+      color: "#e0e7ff",
+      textColor: "#4f46e5",
+    },
+    {
+      role: "Company Admin",
+      username: "companyadmin",
+      pw: "admin123",
+      letter: "C",
+      color: "#d1fae5",
+      textColor: "#059669",
+    },
   ];
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", background: "linear-gradient(135deg,#4f46e5 0%,#3b82f6 100%)" }}>
+    <div style={{ display: "flex", width: "100vw", height: "100vh", fontFamily: "'Inter', sans-serif" }}>
+      {/* LEFT SIDE - BUS BANNER */}
+      <div 
+        style={{ 
+          flex: 1.2, 
+          position: "relative",
+          background: "linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2069&auto=format&fit=crop')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: "0 60px"
+        }}
+      >
+        <div style={{ maxWidth: 450 }}>
+          {/* Logo Badge */}
+          <div style={{ 
+            width: "56px", 
+            height: "56px", 
+            background: "rgba(255, 255, 255, 0.1)", 
+            borderRadius: "14px", 
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center",
+            fontSize: "20px",
+            fontWeight: 800,
+            marginBottom: "30px",
+            backdropFilter: "blur(10px)"
+          }}>
+            GB
+          </div>
 
-      {/* Left branding panel */}
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: 48, color: "white" }}>
-        <div>
-          <div style={{ fontSize: 60, marginBottom: 16 }}>🚌</div>
-          <h1 style={{ fontSize: 40, fontWeight: 800, margin: "0 0 12px", letterSpacing: -1 }}>GoBus Admin</h1>
-          <p style={{ fontSize: 16, opacity: .8, maxWidth: 320, lineHeight: 1.7 }}>
-            Smart Real-Time Bus Tracking System — Monitor your fleet live, manage drivers, routes, and more.
+          <h1 style={{ fontSize: "48px", fontWeight: 800, margin: "0 0 16px", letterSpacing: "-1px" }}>
+            GoBus Admin
+          </h1>
+          <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.8)", lineHeight: "1.6", marginBottom: "40px" }}>
+            Smart Real-Time Bus Tracking System — Monitor your fleet live, manage drivers, and trips.
           </p>
-          <div style={{ marginTop: 40, display: "flex", flexDirection: "column", gap: 14 }}>
-            {[["📡", "Live GPS tracking via driver mobile"],
-            ["🗺", "Route & trip management"],
-            ["📊", "Real-time analytics & reports"]].map(([icon, text]) => (
-              <div key={text} style={{ display: "flex", alignItems: "center", gap: 12, fontSize: 14, opacity: .85 }}>
-                <span style={{ fontSize: 22 }}>{icon}</span>{text}
-              </div>
-            ))}
+
+          {/* Features */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", color: "rgba(255,255,255,0.9)", fontSize: "15px" }}>
+              <Navigation size={20} color="rgba(255,255,255,0.7)" />
+              Live GPS tracking via driver mobile
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", color: "rgba(255,255,255,0.9)", fontSize: "15px" }}>
+              <Route size={20} color="rgba(255,255,255,0.7)" />
+              Route & trip management
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", color: "rgba(255,255,255,0.9)", fontSize: "15px" }}>
+              <BarChart3 size={20} color="rgba(255,255,255,0.7)" />
+              Real-time analytics & reports
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Right login panel */}
-      <div style={{ width: 480, background: "white", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 48 }}>
-        <div style={{ width: "100%", maxWidth: 380 }}>
-
-          <h2 style={{ fontSize: 28, fontWeight: 800, color: "#0f172a", margin: "0 0 6px" }}>Welcome Back 👋</h2>
-          <p style={{ color: "#64748b", marginBottom: 32, fontSize: 14 }}>Sign in with your username and password</p>
+      {/* RIGHT SIDE - LOGIN FORM */}
+      <div style={{ flex: 1, background: "#f8fafc", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ width: "100%", maxWidth: "400px" }}>
+          <h2 style={{ fontSize: "32px", fontWeight: 800, color: "#0f172a", margin: "0 0 8px", letterSpacing: "-0.5px" }}>
+            Welcome Back
+          </h2>
+          <p style={{ color: "#64748b", margin: "0 0 40px", fontSize: "15px" }}>
+            Sign in with your admin username
+          </p>
 
           <form onSubmit={handleSubmit}>
-
-            {/* Username field */}
-            <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 13, fontWeight: 700, color: "#374151", display: "block", marginBottom: 6 }}>
-                Username
+            {/* Username Input */}
+            <div style={{ marginBottom: "20px" }}>
+              <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#64748b", marginBottom: "8px", letterSpacing: "0.5px" }}>
+                USERNAME
               </label>
               <div style={{ position: "relative" }}>
-                <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 16 }}>👤</span>
+                <User size={18} color="#94a3b8" style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)" }} />
                 <input
                   name="username"
                   type="text"
+                  placeholder="Enter username"
                   value={form.username}
                   onChange={handleChange}
-                  placeholder="Enter your username"
-                  autoComplete="off"
-                  style={{ width: "100%", padding: "13px 14px 13px 42px", borderRadius: 12, border: "1.5px solid #e5e7eb", fontSize: 14, outline: "none", boxSizing: "border-box", color: "#0f172a" }}
-                  onFocus={e => e.target.style.borderColor = "#4f46e5"}
-                  onBlur={e => e.target.style.borderColor = "#e5e7eb"}
+                  autoComplete="username"
+                  style={{
+                    width: "100%",
+                    padding: "14px 16px 14px 44px",
+                    borderRadius: "12px",
+                    border: "1px solid #e2e8f0",
+                    background: "white",
+                    fontSize: "15px",
+                    color: "#0f172a",
+                    boxSizing: "border-box",
+                    outline: "none",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.02)",
+                    transition: "all 0.2s"
+                  }}
+                  onFocus={(e) => { e.target.style.borderColor = "#6366f1"; e.target.style.boxShadow = "0 0 0 4px rgba(99, 102, 241, 0.1)"; }}
+                  onBlur={(e) => { e.target.style.borderColor = "#e2e8f0"; e.target.style.boxShadow = "0 1px 2px rgba(0,0,0,0.02)"; }}
                 />
               </div>
             </div>
 
-            {/* Password field */}
-            <div style={{ marginBottom: 20 }}>
-              <label style={{ fontSize: 13, fontWeight: 700, color: "#374151", display: "block", marginBottom: 6 }}>
-                Password
+            {/* Password Input */}
+            <div style={{ marginBottom: "24px" }}>
+              <label style={{ display: "block", fontSize: "12px", fontWeight: 700, color: "#64748b", marginBottom: "8px", letterSpacing: "0.5px" }}>
+                PASSWORD
               </label>
               <div style={{ position: "relative" }}>
-                <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", fontSize: 16 }}>🔒</span>
+                <Lock size={18} color="#94a3b8" style={{ position: "absolute", left: "16px", top: "50%", transform: "translateY(-50%)" }} />
                 <input
                   name="password"
                   type={showPass ? "text" : "password"}
+                  placeholder="••••••••"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="Enter your password"
-                  style={{ width: "100%", padding: "13px 44px 13px 42px", borderRadius: 12, border: "1.5px solid #e5e7eb", fontSize: 14, outline: "none", boxSizing: "border-box", color: "#0f172a" }}
-                  onFocus={e => e.target.style.borderColor = "#4f46e5"}
-                  onBlur={e => e.target.style.borderColor = "#e5e7eb"}
+                  autoComplete="current-password"
+                  style={{
+                    width: "100%",
+                    padding: "14px 44px 14px 44px",
+                    borderRadius: "12px",
+                    border: "1px solid #e2e8f0",
+                    background: "white",
+                    fontSize: "15px",
+                    color: "#0f172a",
+                    boxSizing: "border-box",
+                    outline: "none",
+                    boxShadow: "0 1px 2px rgba(0,0,0,0.02)",
+                    transition: "all 0.2s"
+                  }}
+                  onFocus={(e) => { e.target.style.borderColor = "#6366f1"; e.target.style.boxShadow = "0 0 0 4px rgba(99, 102, 241, 0.1)"; }}
+                  onBlur={(e) => { e.target.style.borderColor = "#e2e8f0"; e.target.style.boxShadow = "0 1px 2px rgba(0,0,0,0.02)"; }}
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPass(p => !p)}
-                  style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", fontSize: 16, color: "#9ca3af" }}>
-                  {showPass ? "🙈" : "👁"}
+                  onClick={() => setShowPass(!showPass)}
+                  style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", display: "flex", padding: 0 }}
+                >
+                  {showPass ? <EyeOff size={18} color="#94a3b8" /> : <Eye size={18} color="#94a3b8" />}
                 </button>
               </div>
             </div>
 
-            {/* Error */}
+            {/* Error Message */}
             {error && (
-              <div style={{ background: "#fee2e2", color: "#991b1b", padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
-                ✕ {error}
+              <div style={{ background: "#fef2f2", color: "#b91c1c", padding: "12px 16px", borderRadius: "8px", fontSize: "13px", fontWeight: 500, marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px", border: "1px solid #fecaca" }}>
+                <span style={{ fontWeight: 800 }}>!</span> {error}
               </div>
             )}
 
-            {/* Submit */}
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
-              style={{ width: "100%", background: "#4f46e5", color: "white", border: "none", padding: "14px", borderRadius: 12, fontSize: 16, fontWeight: 700, cursor: isLoading ? "not-allowed" : "pointer", opacity: isLoading ? .7 : 1 }}
-              onMouseEnter={e => { if (!isLoading) e.target.style.background = "#4338ca"; }}
-              onMouseLeave={e => e.target.style.background = "#4f46e5"}>
-              {isLoading ? "⏳ Signing in..." : "Sign In →"}
+              style={{
+                width: "100%",
+                background: "#4f46e5",
+                color: "white",
+                border: "none",
+                padding: "16px",
+                borderRadius: "12px",
+                fontSize: "16px",
+                fontWeight: 600,
+                cursor: isLoading ? "not-allowed" : "pointer",
+                opacity: isLoading ? 0.8 : 1,
+                transition: "background 0.2s",
+                boxShadow: "0 4px 14px rgba(79, 70, 229, 0.3)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px"
+              }}
+              onMouseEnter={(e) => { if (!isLoading) e.target.style.background = "#4338ca"; }}
+              onMouseLeave={(e) => e.target.style.background = "#4f46e5"}
+            >
+              {isLoading ? <Loader2 size={18} className="spinner" /> : null}
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 
-          {/* Demo credential hints */}
-          <div style={{ marginTop: 28 }}>
-            <div style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", marginBottom: 12, fontWeight: 600, textTransform: "uppercase", letterSpacing: .5 }}>
-              — Demo Accounts —
+          {/* Demo Accounts List */}
+          <div style={{ marginTop: "40px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textAlign: "center", marginBottom: "16px", textTransform: "uppercase", letterSpacing: "1px" }}>
+              DEMO ACCOUNTS
             </div>
-            {hints.map(h => (
-              <button
-                key={h.role}
-                onClick={() => quickFill(h.username, h.pw)}
-                style={{ width: "100%", background: "#f8fafc", border: "1.5px solid #e2e8f0", borderRadius: 12, padding: "11px 14px", marginBottom: 8, cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = h.color; e.currentTarget.style.background = `${h.color}10`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#f8fafc"; }}>
-                <span style={{ fontSize: 22 }}>{h.icon}</span>
-                <div style={{ textAlign: "left" }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{h.role}</div>
-                  <div style={{ fontSize: 11, color: "#94a3b8" }}>
-                    Username: <strong>{h.username}</strong> · Password: <strong>{h.pw}</strong>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {demoAccounts.map((acc, index) => (
+                <button
+                  key={index}
+                  onClick={() => quickFill(acc.username, acc.pw)}
+                  style={{
+                    background: "white",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "12px",
+                    padding: "16px",
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "all 0.2s",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.01)"
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#94a3b8"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.03)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.01)"; }}
+                >
+                  <div style={{ 
+                    width: "36px", 
+                    height: "36px", 
+                    borderRadius: "8px", 
+                    background: acc.color, 
+                    color: acc.textColor,
+                    display: "flex", 
+                    alignItems: "center", 
+                    justifyContent: "center",
+                    fontSize: "16px",
+                    fontWeight: 800,
+                    marginRight: "16px"
+                  }}>
+                    {acc.letter}
                   </div>
-                </div>
-                <span style={{ marginLeft: "auto", fontSize: 11, color: h.color, fontWeight: 700 }}>Fill →</span>
-              </button>
-            ))}
-          </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: "14px", fontWeight: 700, color: "#0f172a", marginBottom: "2px" }}>
+                      {acc.role}
+                    </div>
+                    <div style={{ fontSize: "12px", color: "#64748b" }}>
+                      {acc.username} <span style={{ opacity: 0.5 }}>•</span> {acc.pw}
+                    </div>
+                  </div>
 
+                  <div style={{ fontSize: "12px", fontWeight: 700, color: "#6366f1" }}>
+                    Fill →
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+          
         </div>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .spinner {
+          animation: spin 1s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
