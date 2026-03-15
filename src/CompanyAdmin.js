@@ -525,7 +525,7 @@ function DriverManagement({ drivers, setDrivers, buses, showToast }) {
                 showToast(`Driver added. Auto-generated password: ${data.password}`);
                 
                 // Show a standard browser alert so admin can easily copy it
-                alert(`Driver successfully added!\nPhone: ${form.phone}\nAuto-generated Password: ${data.password}\n\nPlease share this password with the driver.`);
+                alert(`Driver successfully added!\n\n📱 Driver App Login Credentials:\nUsername (Phone): ${form.phone}\nPassword: ${data.password}\n\nPlease share these credentials with the driver so they can log in to the GoBus Driver App.`);
 
             } catch (err) {
                 console.error(err);
